@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_validation/form_validation.dart';
 
 class AuthenticateForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -24,6 +25,11 @@ class AuthenticateForm extends StatelessWidget {
           SizedBox(
             width: 300,
             child: TextFormField(
+              validator: (value) {
+                final validator = Validator(
+                    validators: [RequiredValidator(), EmailValidator()]);
+                return validator.validate(label: 'Email', value: value);
+              },
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
@@ -35,6 +41,13 @@ class AuthenticateForm extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 15),
               child: TextFormField(
+                validator: (value) {
+                  final validator = Validator(validators: [
+                    RequiredValidator(),
+                    MinLengthValidator(length: 8)
+                  ]);
+                  return validator.validate(label: 'Password', value: value);
+                },
                 controller: passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(
