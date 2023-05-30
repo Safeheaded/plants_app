@@ -36,8 +36,9 @@ class _SignInState extends State<SignIn> {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const PlantsList()));
       }
-    } catch (e) {
-      print(e);
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
     } finally {
       setState(() {
         _isLoading = false;

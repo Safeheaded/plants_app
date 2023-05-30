@@ -2,6 +2,7 @@ import 'package:am_project/main.dart';
 import 'package:am_project/screens/plants_list.dart';
 import 'package:am_project/widgets/authenticate_form.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -34,8 +35,9 @@ class _SignUpState extends State<SignUp> {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const PlantsList()));
       }
-    } catch (e) {
-      print(e);
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
     } finally {
       setState(() {
         _isLoading = false;
