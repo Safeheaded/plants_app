@@ -1,6 +1,9 @@
 import 'package:am_project/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart' as p;
+
+import '../providers/user_provider.dart';
 
 class ListsRoot extends StatefulWidget {
   const ListsRoot({super.key});
@@ -10,18 +13,23 @@ class ListsRoot extends StatefulWidget {
 }
 
 class _ListsRootState extends State<ListsRoot> {
-  final List<Widget> _widgetOptions = <Widget>[
-    const Text(
-      'Index 0: Home',
-    ),
-    const Text(
-      'Index 1: Profile',
-    ),
-    const Text(
-      'Index 2: Profile',
-    ),
-  ];
+  List<Widget>? _widgetOptions;
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    <Widget>[
+      Text(p.Provider.of<UserProvider>(context, listen: false).user?.email ??
+          ''),
+      const Text(
+        'Index 1: Profile',
+      ),
+      const Text(
+        'Index 2: Profile',
+      ),
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,41 +46,47 @@ class _ListsRootState extends State<ListsRoot> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/profile');
-            },
-            icon: const Icon(Icons.account_circle),
-          )
-        ],
-        title: const Text('Plants List'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/add');
-        },
-        child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) {
-          setState(() {
-            _selectedIndex = value;
-          });
-        },
-        currentIndex: _selectedIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: 'To Read',
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.auto_stories), label: 'Being Read'),
-          BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Read')
-        ],
-      ),
-      body: Center(child: _widgetOptions[_selectedIndex]),
-    );
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+              icon: const Icon(Icons.account_circle),
+            )
+          ],
+          title: const Text('Plants List'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/add');
+          },
+          child: const Icon(Icons.add),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            setState(() {
+              _selectedIndex = value;
+            });
+          },
+          currentIndex: _selectedIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.card_giftcard),
+              label: 'To Read',
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.auto_stories), label: 'Being Read'),
+            BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Read')
+          ],
+        ),
+        body: Column(children: [
+          Center(
+              child: Text(p.Provider.of<UserProvider>(context, listen: true)
+                      .user
+                      ?.email ??
+                  '')),
+          ElevatedButton(onPressed: handleLogout, child: const Text('Logout'))
+        ]));
   }
 }

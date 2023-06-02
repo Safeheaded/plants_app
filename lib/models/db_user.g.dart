@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'db_user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map<String, dynamic> json) => User(
+DBUser _$DBUserFromJson(Map<String, dynamic> json) => DBUser(
       json['email'] as String,
       json['id'] as int,
-      json['uuid'] as String,
+      json['user_id'] as String,
       $enumDecode(_$LanguageEnumMap, json['language']),
     );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$DBUserToJson(DBUser instance) => <String, dynamic>{
       'email': instance.email,
       'id': instance.id,
-      'uuid': instance.uuid,
+      'user_id': instance.uuid,
       'language': _$LanguageEnumMap[instance.language]!,
     };
 

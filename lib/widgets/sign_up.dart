@@ -3,6 +3,9 @@ import 'package:am_project/widgets/currently_reading_list.dart';
 import 'package:am_project/widgets/authenticate_form.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart' as p;
+
+import '../providers/user_provider.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -32,6 +35,7 @@ class _SignUpState extends State<SignUp> {
     try {
       await supabase.auth.signUp(email: email, password: password);
       if (context.mounted) {
+        p.Provider.of<UserProvider>(context, listen: false).getUser();
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
