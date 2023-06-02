@@ -1,5 +1,5 @@
 import 'package:am_project/main.dart';
-import 'package:am_project/screens/plants_list.dart';
+import 'package:am_project/widgets/currently_reading_list.dart';
 import 'package:am_project/widgets/authenticate_form.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,8 +32,10 @@ class _SignUpState extends State<SignUp> {
     try {
       await supabase.auth.signUp(email: email, password: password);
       if (context.mounted) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const PlantsList()));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const CurrentlyReadingList()));
       }
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context)

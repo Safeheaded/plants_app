@@ -2,7 +2,7 @@ import 'package:am_project/widgets/authenticate_form.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../screens/plants_list.dart';
+import 'currently_reading_list.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -33,8 +33,10 @@ class _SignInState extends State<SignIn> {
       await Supabase.instance.client.auth
           .signInWithPassword(email: email, password: password);
       if (context.mounted) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const PlantsList()));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const CurrentlyReadingList()));
       }
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context)

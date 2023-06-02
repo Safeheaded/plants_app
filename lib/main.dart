@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:am_project/screens/lists_root.dart';
 import 'package:am_project/screens/login_screen.dart';
-import 'package:am_project/screens/plants_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -28,7 +28,7 @@ class _AppRootState extends State<AppRoot> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: supabase.auth.currentSession != null
-            ? const PlantsList()
+            ? const ListsRoot()
             : const LoginScreen());
   }
 }

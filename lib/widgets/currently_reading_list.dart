@@ -2,8 +2,8 @@ import 'package:am_project/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class PlantsList extends StatelessWidget {
-  const PlantsList({super.key});
+class CurrentlyReadingList extends StatelessWidget {
+  const CurrentlyReadingList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,23 @@ class PlantsList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Plants List'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add');
+        },
+        child: const Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle), label: 'Profile'),
+        ],
       ),
       body: Center(
           child: ElevatedButton(
