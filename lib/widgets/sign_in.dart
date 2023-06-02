@@ -1,10 +1,8 @@
+import 'package:am_project/router/root_router.dart';
 import 'package:am_project/widgets/authenticate_form.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:provider/provider.dart' as p;
-
-import '../providers/user_provider.dart';
-import 'currently_reading_list.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -35,11 +33,7 @@ class _SignInState extends State<SignIn> {
       await Supabase.instance.client.auth
           .signInWithPassword(email: email, password: password);
       if (context.mounted) {
-        p.Provider.of<UserProvider>(context, listen: false).getUser();
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const CurrentlyReadingList()));
+        context.router.replaceAll([const BooksListsRoute()]);
       }
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context)

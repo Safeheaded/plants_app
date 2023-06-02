@@ -1,7 +1,9 @@
 import 'package:am_project/widgets/sign_in.dart';
 import 'package:am_project/widgets/sign_up.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

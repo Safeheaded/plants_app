@@ -1,25 +1,22 @@
-import 'package:am_project/screens/login_screen.dart';
+import 'package:am_project/main.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:provider/provider.dart' as p;
 
-import '../providers/user_provider.dart';
-
-class ListsRoot extends StatefulWidget {
-  const ListsRoot({super.key});
+@RoutePage()
+class BooksListsScreen extends StatefulWidget {
+  const BooksListsScreen({super.key});
 
   @override
-  State<ListsRoot> createState() => _ListsRootState();
+  State<BooksListsScreen> createState() => _BooksListsScreenState();
 }
 
-class _ListsRootState extends State<ListsRoot> {
+class _BooksListsScreenState extends State<BooksListsScreen> {
   int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final widgetOptions = <Widget>[
-      Text(
-          p.Provider.of<UserProvider>(context, listen: true).user?.email ?? ''),
+      const Text(''),
       const Text(
         'Index 1: Profile',
       ),
@@ -29,15 +26,7 @@ class _ListsRootState extends State<ListsRoot> {
     ];
 
     Future<void> handleLogout() async {
-      await Supabase.instance.client.auth.signOut();
-      if (context.mounted) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const LoginScreen(),
-            ),
-            (route) => false);
-      }
+      await supabase.auth.signOut();
     }
 
     return Scaffold(
@@ -52,11 +41,9 @@ class _ListsRootState extends State<ListsRoot> {
           ],
           title: const Text('Plants List'),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/add');
-          },
-          child: const Icon(Icons.add),
+        floatingActionButton: const FloatingActionButton(
+          onPressed: null,
+          child: Icon(Icons.add),
         ),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (value) {
@@ -76,7 +63,7 @@ class _ListsRootState extends State<ListsRoot> {
           ],
         ),
         body: Column(children: [
-          Center(child: widgetOptions?.elementAt(_selectedIndex)),
+          Center(child: widgetOptions.elementAt(_selectedIndex)),
           ElevatedButton(onPressed: handleLogout, child: const Text('Logout'))
         ]));
   }
