@@ -13,14 +13,13 @@ class ListsRoot extends StatefulWidget {
 }
 
 class _ListsRootState extends State<ListsRoot> {
-  List<Widget>? _widgetOptions;
   int _selectedIndex = 0;
 
   @override
-  void initState() {
-    <Widget>[
-      Text(p.Provider.of<UserProvider>(context, listen: false).user?.email ??
-          ''),
+  Widget build(BuildContext context) {
+    final widgetOptions = <Widget>[
+      Text(
+          p.Provider.of<UserProvider>(context, listen: true).user?.email ?? ''),
       const Text(
         'Index 1: Profile',
       ),
@@ -28,11 +27,7 @@ class _ListsRootState extends State<ListsRoot> {
         'Index 2: Profile',
       ),
     ];
-    super.initState();
-  }
 
-  @override
-  Widget build(BuildContext context) {
     Future<void> handleLogout() async {
       await Supabase.instance.client.auth.signOut();
       if (context.mounted) {
@@ -81,11 +76,7 @@ class _ListsRootState extends State<ListsRoot> {
           ],
         ),
         body: Column(children: [
-          Center(
-              child: Text(p.Provider.of<UserProvider>(context, listen: true)
-                      .user
-                      ?.email ??
-                  '')),
+          Center(child: widgetOptions?.elementAt(_selectedIndex)),
           ElevatedButton(onPressed: handleLogout, child: const Text('Logout'))
         ]));
   }
