@@ -3,10 +3,10 @@ import 'package:am_project/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable()
+@Singleton()
 class UserProvider with ChangeNotifier {
   final UserRepository _userRepository;
-  UserProvider(this._userRepository);
+  UserProvider(@Named('UserService') this._userRepository);
 
   DBUser? _user;
 
