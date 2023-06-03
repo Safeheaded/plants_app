@@ -5,7 +5,6 @@ import 'package:auto_route/auto_route.dart';
 class AuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    print('AuthGuard: ${resolver.route.name}');
     if (supabase.auth.currentSession != null ||
         (resolver.route.name == LoginRoute.name &&
             supabase.auth.currentSession == null)) {

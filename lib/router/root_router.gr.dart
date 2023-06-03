@@ -33,6 +33,24 @@ abstract class _$RootRouter extends RootStackRouter {
         child: const SplashScreen(),
       );
     },
+    DashboardRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const DashboardScreen(),
+      );
+    },
+    ReadingTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ReadingTabScreen(),
+      );
+    },
+    ReadTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ReadTabScreen(),
+      );
+    },
   };
 }
 
@@ -74,6 +92,48 @@ class SplashRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [DashboardScreen]
+class DashboardRoute extends PageRouteInfo<void> {
+  const DashboardRoute({List<PageRouteInfo>? children})
+      : super(
+          DashboardRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DashboardRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ReadingTabScreen]
+class ReadingTabRoute extends PageRouteInfo<void> {
+  const ReadingTabRoute({List<PageRouteInfo>? children})
+      : super(
+          ReadingTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ReadingTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ReadTabScreen]
+class ReadTabRoute extends PageRouteInfo<void> {
+  const ReadTabRoute({List<PageRouteInfo>? children})
+      : super(
+          ReadTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ReadTabRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

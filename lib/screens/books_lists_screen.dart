@@ -1,4 +1,4 @@
-import 'package:am_project/main.dart';
+import 'package:am_project/router/root_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -11,60 +11,31 @@ class BooksListsScreen extends StatefulWidget {
 }
 
 class _BooksListsScreenState extends State<BooksListsScreen> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    final widgetOptions = <Widget>[
-      const Text(''),
-      const Text(
-        'Index 1: Profile',
-      ),
-      const Text(
-        'Index 2: Profile',
-      ),
-    ];
-
-    Future<void> handleLogout() async {
-      await supabase.auth.signOut();
-    }
-
-    return Scaffold(
-        appBar: AppBar(
-          actions: [
+    return AutoTabsScaffold(
+      appBarBuilder: (context, tabsRouter) {
+        return AppBar(
+          title: const Text('Books Lists'),
+          actions: const [
             IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profile');
-              },
-              icon: const Icon(Icons.account_circle),
-            )
-          ],
-          title: const Text('Plants List'),
-        ),
-        floatingActionButton: const FloatingActionButton(
-          onPressed: null,
-          child: Icon(Icons.add),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (value) {
-            setState(() {
-              _selectedIndex = value;
-            });
-          },
-          currentIndex: _selectedIndex,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.card_giftcard),
-              label: 'To Read',
+              icon: Icon(Icons.logout),
+              onPressed: null,
             ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.auto_stories), label: 'Being Read'),
-            BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Read')
           ],
-        ),
-        body: Column(children: [
-          Center(child: widgetOptions.elementAt(_selectedIndex)),
-          ElevatedButton(onPressed: handleLogout, child: const Text('Logout'))
-        ]));
+        );
+      },
+      routes: const [ReadingTabRoute(), ReadTabRoute()],
+      bottomNavigationBuilder: (context, tabsRouter) {
+        return BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Reading'),
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Read'),
+          ],
+          currentIndex: tabsRouter.activeIndex,
+          onTap: tabsRouter.setActiveIndex,
+        );
+      },
+    );
   }
 }

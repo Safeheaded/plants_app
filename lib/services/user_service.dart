@@ -3,7 +3,7 @@ import 'package:am_project/repositories/user_repository.dart';
 import 'package:injectable/injectable.dart';
 import '../models/db_user.dart';
 
-@Named('UserService')
+@named
 @Injectable(as: UserRepository)
 class UserService implements UserRepository {
   @override
