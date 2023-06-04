@@ -6,7 +6,7 @@ part 'open_library_model.g.dart';
 class BookDoc extends Equatable {
   final String title;
   @JsonKey(name: 'cover_i')
-  final int coverI;
+  final int? coverI;
 
   const BookDoc(this.title, this.coverI);
 

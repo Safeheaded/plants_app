@@ -6,13 +6,14 @@ import 'package:injectable/injectable.dart';
 import 'package:http/http.dart' as http;
 
 @named
-@Injectable(as: OpenLibraryService)
+@Injectable(as: OpenLibraryRepository)
 class OpenLibraryService implements OpenLibraryRepository {
   @override
   Future<List<BookDoc>> searchBooks(String bookTitle) async {
     final encodedQuery = Uri.encodeComponent(bookTitle);
-    final response = await http.get(Uri.parse(
-        'https://openlibrary.org/search.json?q=$encodedQuery&fields=title,cover_i&limit=10'));
+    final uri = Uri.parse(
+        'https://openlibrary.org/search.json?q=$encodedQuery&fields=title,cover_i&limit=10');
+    final response = await http.get(uri);
 
     if (response.statusCode == 200) {
       final openLibraryModel =

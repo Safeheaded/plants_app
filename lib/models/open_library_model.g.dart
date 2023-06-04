@@ -8,7 +8,7 @@ part of 'open_library_model.dart';
 
 BookDoc _$BookDocFromJson(Map<String, dynamic> json) => BookDoc(
       json['title'] as String,
-      json['cover_i'] as int,
+      json['cover_i'] as int?,
     );
 
 Map<String, dynamic> _$BookDocToJson(BookDoc instance) => <String, dynamic>{

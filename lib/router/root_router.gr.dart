@@ -21,22 +21,28 @@ abstract class _$RootRouter extends RootStackRouter {
         child: const BooksListsScreen(),
       );
     },
+    DashboardRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const DashboardScreen(),
+      );
+    },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginScreen(),
       );
     },
+    SearchBooksRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SearchBooksScreen(),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SplashScreen(),
-      );
-    },
-    DashboardRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const DashboardScreen(),
       );
     },
     ReadingTabRoute.name: (routeData) {
@@ -69,6 +75,20 @@ class BooksListsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DashboardScreen]
+class DashboardRoute extends PageRouteInfo<void> {
+  const DashboardRoute({List<PageRouteInfo>? children})
+      : super(
+          DashboardRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DashboardRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
@@ -83,6 +103,20 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SearchBooksScreen]
+class SearchBooksRoute extends PageRouteInfo<void> {
+  const SearchBooksRoute({List<PageRouteInfo>? children})
+      : super(
+          SearchBooksRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchBooksRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
@@ -92,20 +126,6 @@ class SplashRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [DashboardScreen]
-class DashboardRoute extends PageRouteInfo<void> {
-  const DashboardRoute({List<PageRouteInfo>? children})
-      : super(
-          DashboardRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'DashboardRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

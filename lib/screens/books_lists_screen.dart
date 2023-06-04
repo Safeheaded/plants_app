@@ -14,6 +14,12 @@ class _BooksListsScreenState extends State<BooksListsScreen> {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.router.push(const SearchBooksRoute());
+        },
+        child: const Icon(Icons.search),
+      ),
       appBarBuilder: (context, tabsRouter) {
         return AppBar(
           title: const Text('Books Lists'),
