@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton()
-class UserProvider with ChangeNotifier {
+class UserProvider extends ChangeNotifier {
   final UserRepository _userRepository;
   UserProvider(@Named.from(UserService) this._userRepository);
 
