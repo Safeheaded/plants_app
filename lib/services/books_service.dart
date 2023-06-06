@@ -19,13 +19,48 @@ class BooksService implements BooksRepository {
           'user_id': supabase.auth.currentUser!.id,
         })
         .select()
-        .single();
+        .maybeSingle();
     return Book.fromJson(response);
   }
 
   @override
-  Future<List<Book>> getBooks() {
-    // TODO: implement getBooks
-    throw UnimplementedError();
+  Future<List<Book>> getReadingBooks() async {
+    final response = await supabase
+        .from('books')
+        .select()
+        .eq('user_id', supabase.auth.currentUser!.id)
+        .eq('state', 'reading');
+    if (response == null) return [];
+    List<Book> books;
+    books = (response as List).map((data) => Book.fromJson(data)).toList();
+    return books;
+  }
+
+  @override
+  Future<List<Book>> getReadBook() async {
+    final response = await supabase
+        .from('books')
+        .select()
+        .eq('user_id', supabase.auth.currentUser!.id)
+        .eq('state', 'read')
+        .maybeSingle();
+    if (response == null) return [];
+    List<Book> books;
+    books = (response as List).map((data) => Book.fromJson(data)).toList();
+    return books;
+  }
+
+  @override
+  Future<List<Book>> getWantToReadBooks() async {
+    final response = await supabase
+        .from('books')
+        .select()
+        .eq('user_id', supabase.auth.currentUser!.id)
+        .eq('state', 'wantToRead')
+        .maybeSingle();
+    if (response == null) return [];
+    List<Book> books;
+    books = (response as List).map((data) => Book.fromJson(data)).toList();
+    return books;
   }
 }

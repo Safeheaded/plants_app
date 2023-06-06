@@ -12,11 +12,21 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ListenableProvider.value(value: getIt<OpenLibraryProvider>()),
-        ListenableProvider.value(value: getIt<BooksProvider>())
-      ],
-      child: const AutoRouter(),
-    );
+        providers: [
+          ListenableProvider.value(value: getIt<OpenLibraryProvider>()),
+          ListenableProvider.value(value: getIt<BooksProvider>())
+        ],
+        builder: (context, _) => Scaffold(
+              body: FutureBuilder(
+                future: context.read<BooksProvider>().getAllBooks(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return const AutoRouter();
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ));
   }
 }
