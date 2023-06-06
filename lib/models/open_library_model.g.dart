@@ -9,11 +9,14 @@ part of 'open_library_model.dart';
 BookDoc _$BookDocFromJson(Map<String, dynamic> json) => BookDoc(
       json['title'] as String,
       json['cover_i'] as int?,
+      const AuthorListToStringConverter().fromJson(json['author_name'] as List),
     );
 
 Map<String, dynamic> _$BookDocToJson(BookDoc instance) => <String, dynamic>{
       'title': instance.title,
       'cover_i': instance.coverI,
+      'author_name':
+          const AuthorListToStringConverter().toJson(instance.author),
     };
 
 OpenLibraryModel _$OpenLibraryModelFromJson(Map<String, dynamic> json) =>

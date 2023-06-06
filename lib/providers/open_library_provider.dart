@@ -14,7 +14,6 @@ class OpenLibraryProvider extends ChangeNotifier {
     _books.clear();
     final books = await _openLibraryRepository.searchBooks(bookTitle);
     _books.addAll(books.where((book) => book.coverI != null).toList());
-    print(_books);
     notifyListeners();
   }
 

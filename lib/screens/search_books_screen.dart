@@ -1,3 +1,5 @@
+import 'package:am_project/classes/shallow_book.dart';
+import 'package:am_project/providers/books_provider.dart';
 import 'package:am_project/providers/open_library_provider.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +57,14 @@ class _SearchBooksScreenState extends State<SearchBooksScreen> {
                       backgroundImage: NetworkImage(
                           'https://covers.openlibrary.org/b/id/${books[index].coverI}-M.jpg'),
                     ),
+                    onTap: () {
+                      final currentBook = books[index];
+                      final shallowBook = ShallowBook(
+                          currentBook.title,
+                          currentBook.author,
+                          'https://covers.openlibrary.org/b/id/${books[index].coverI}-M.jpg');
+                      context.read<BooksProvider>().addReadingBook(shallowBook);
+                    },
                   );
                 }),
           ),
