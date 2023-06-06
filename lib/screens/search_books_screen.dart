@@ -15,11 +15,20 @@ class SearchBooksScreen extends StatefulWidget {
 
 class _SearchBooksScreenState extends State<SearchBooksScreen> {
   final TextEditingController _bookTitleController = TextEditingController();
+  late Future<void> _getData;
 
   @override
   void dispose() {
     _bookTitleController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    _getData = context
+        .read<OpenLibraryProvider>()
+        .searchBooks(_bookTitleController.text);
+    super.initState();
   }
 
   @override
@@ -38,35 +47,52 @@ class _SearchBooksScreenState extends State<SearchBooksScreen> {
             )),
             IconButton(
                 onPressed: () {
-                  Provider.of<OpenLibraryProvider>(context, listen: false)
-                      .searchBooks(_bookTitleController.text);
+                  setState(() {
+                    _getData = context
+                        .read<OpenLibraryProvider>()
+                        .searchBooks(_bookTitleController.text);
+                  });
                 },
                 icon: const Icon(Icons.search)),
           ],
         ),
         Expanded(
           child: SingleChildScrollView(
-            child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: books.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(books[index].title),
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://covers.openlibrary.org/b/id/${books[index].coverI}-M.jpg'),
-                    ),
-                    onTap: () {
-                      final currentBook = books[index];
-                      final shallowBook = ShallowBook(
-                          currentBook.title,
-                          currentBook.author,
-                          'https://covers.openlibrary.org/b/id/${books[index].coverI}-M.jpg');
-                      context.read<BooksProvider>().addReadingBook(shallowBook);
-                    },
-                  );
-                }),
+            child: _bookTitleController.text.isEmpty
+                ? null
+                : FutureBuilder(
+                    future: _getData,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: books.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(books[index].title),
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      'https://covers.openlibrary.org/b/id/${books[index].coverI}-M.jpg'),
+                                ),
+                                onTap: () {
+                                  final currentBook = books[index];
+                                  final shallowBook = ShallowBook(
+                                      currentBook.title,
+                                      currentBook.author,
+                                      'https://covers.openlibrary.org/b/id/${books[index].coverI}-M.jpg');
+                                  context
+                                      .read<BooksProvider>()
+                                      .addReadingBook(shallowBook);
+                                },
+                              );
+                            });
+                      } else if (snapshot.hasError) {
+                        return const Text('An Error Ocurred');
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    }),
           ),
         )
       ]),

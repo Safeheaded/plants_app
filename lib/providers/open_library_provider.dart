@@ -10,11 +10,12 @@ class OpenLibraryProvider extends ChangeNotifier {
 
   List<BookDoc> get books => _books;
 
-  Future<void> searchBooks(String bookTitle) async {
+  Future<List<BookDoc>> searchBooks(String bookTitle) async {
     _books.clear();
     final books = await _openLibraryRepository.searchBooks(bookTitle);
     _books.addAll(books.where((book) => book.coverI != null).toList());
     notifyListeners();
+    return _books;
   }
 
   final OpenLibraryRepository _openLibraryRepository;
