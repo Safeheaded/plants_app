@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:am_project/classes/shallow_book.dart';
 import 'package:am_project/main.dart';
 import 'package:am_project/models/book.dart';
 import 'package:am_project/repositories/books_repository.dart';
 import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 @named
 @Injectable(as: BooksRepository)
