@@ -7,6 +7,7 @@ import '../screens/splash_screen.dart';
 import '../screens/search_books_screen.dart';
 import '../screens/tabs/reading_tab_screen.dart';
 import '../screens/tabs/read_tab_screen.dart';
+import '../screens/tabs/to_read_tab_screen.dart';
 import 'auth_guard.dart';
 part 'root_router.gr.dart';
 
@@ -20,7 +21,8 @@ class RootRouter extends _$RootRouter {
         ], children: [
           AutoRoute(initial: true, page: BooksListsRoute.page, children: [
             AutoRoute(page: ReadingTabRoute.page),
-            AutoRoute(page: ReadTabRoute.page)
+            AutoRoute(page: ReadTabRoute.page),
+            AutoRoute(page: ToReadTabRoute.page)
           ]),
           AutoRoute(page: SearchBooksRoute.page)
         ]),

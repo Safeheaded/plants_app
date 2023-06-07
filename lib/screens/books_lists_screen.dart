@@ -31,10 +31,11 @@ class _BooksListsScreenState extends State<BooksListsScreen> {
           ],
         );
       },
-      routes: const [ReadingTabRoute(), ReadTabRoute()],
+      routes: const [ToReadTabRoute(), ReadingTabRoute(), ReadTabRoute()],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavigationBar(
           items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: 'To Read'),
             BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Reading'),
             BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Read'),
           ],

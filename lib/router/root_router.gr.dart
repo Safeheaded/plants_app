@@ -57,6 +57,12 @@ abstract class _$RootRouter extends RootStackRouter {
         child: const ReadTabScreen(),
       );
     },
+    ToReadTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ToReadTabScreen(),
+      );
+    },
   };
 }
 
@@ -154,6 +160,20 @@ class ReadTabRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ReadTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ToReadTabScreen]
+class ToReadTabRoute extends PageRouteInfo<void> {
+  const ToReadTabRoute({List<PageRouteInfo>? children})
+      : super(
+          ToReadTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ToReadTabRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

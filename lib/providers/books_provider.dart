@@ -15,6 +15,8 @@ class BooksProvider extends ChangeNotifier {
   BooksProvider(@Named.from(BooksService) this._booksRepository);
 
   List<Book> get readingBooks => _readingBooks;
+  List<Book> get readBooks => _readBooks;
+  List<Book> get wantToReadBooks => _wantToReadBooks;
 
   Future<void> addReadingBook(ShallowBook shallowBook) async {
     Book book = await _booksRepository.addReadingBook(shallowBook);
