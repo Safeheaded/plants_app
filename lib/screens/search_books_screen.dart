@@ -1,4 +1,5 @@
 import 'package:am_project/classes/shallow_book.dart';
+import 'package:am_project/models/book.dart';
 import 'package:am_project/providers/books_provider.dart';
 import 'package:am_project/providers/open_library_provider.dart';
 import 'package:auto_route/auto_route.dart';
@@ -7,7 +8,8 @@ import 'package:provider/provider.dart';
 
 @RoutePage()
 class SearchBooksScreen extends StatefulWidget {
-  const SearchBooksScreen({super.key});
+  final BookState bookState;
+  const SearchBooksScreen({super.key, required this.bookState});
 
   @override
   State<SearchBooksScreen> createState() => _SearchBooksScreenState();
@@ -36,7 +38,7 @@ class _SearchBooksScreenState extends State<SearchBooksScreen> {
     final books = Provider.of<OpenLibraryProvider>(context).books;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search Books'),
+        title: Text('Add ${widget.bookState.toString().split('.').last} book'),
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         Row(
@@ -80,10 +82,12 @@ class _SearchBooksScreenState extends State<SearchBooksScreen> {
                                   final shallowBook = ShallowBook(
                                       currentBook.title,
                                       currentBook.author,
-                                      'https://covers.openlibrary.org/b/id/${books[index].coverI}-M.jpg');
+                                      'https://covers.openlibrary.org/b/id/${books[index].coverI}-M.jpg',
+                                      widget.bookState);
                                   context
                                       .read<BooksProvider>()
-                                      .addReadingBook(shallowBook);
+                                      .addBook(shallowBook);
+                                  context.router.pop();
                                 },
                               );
                             });

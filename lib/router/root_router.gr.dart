@@ -34,9 +34,13 @@ abstract class _$RootRouter extends RootStackRouter {
       );
     },
     SearchBooksRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchBooksRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SearchBooksScreen(),
+        child: SearchBooksScreen(
+          key: args.key,
+          bookState: args.bookState,
+        ),
       );
     },
     SplashRoute.name: (routeData) {
@@ -110,16 +114,40 @@ class LoginRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SearchBooksScreen]
-class SearchBooksRoute extends PageRouteInfo<void> {
-  const SearchBooksRoute({List<PageRouteInfo>? children})
-      : super(
+class SearchBooksRoute extends PageRouteInfo<SearchBooksRouteArgs> {
+  SearchBooksRoute({
+    Key? key,
+    required BookState bookState,
+    List<PageRouteInfo>? children,
+  }) : super(
           SearchBooksRoute.name,
+          args: SearchBooksRouteArgs(
+            key: key,
+            bookState: bookState,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SearchBooksRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SearchBooksRouteArgs> page =
+      PageInfo<SearchBooksRouteArgs>(name);
+}
+
+class SearchBooksRouteArgs {
+  const SearchBooksRouteArgs({
+    this.key,
+    required this.bookState,
+  });
+
+  final Key? key;
+
+  final BookState bookState;
+
+  @override
+  String toString() {
+    return 'SearchBooksRouteArgs{key: $key, bookState: $bookState}';
+  }
 }
 
 /// generated route for

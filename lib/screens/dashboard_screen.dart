@@ -18,15 +18,15 @@ class DashboardScreen extends StatelessWidget {
         ],
         builder: (context, _) => Scaffold(
               body: FutureBuilder(
-                future: context.read<BooksProvider>().getAllBooks(),
+                future: context.read<BooksProvider>().getAllBooks(), 
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return const AutoRouter();
+                    return const AutoRouter();  
                   } else {
                     return const Center(child: CircularProgressIndicator());
-                  }
+                  }     
                 },
               ),
             ));
-  }
+  } 
 }

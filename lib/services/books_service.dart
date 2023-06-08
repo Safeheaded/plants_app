@@ -8,14 +8,14 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: BooksRepository)
 class BooksService implements BooksRepository {
   @override
-  Future<Book> addReadingBook(ShallowBook shallowBook) async {
+  Future<Book> addBook(ShallowBook shallowBook) async {
     final response = await supabase
         .from('books')
         .insert({
           'title': shallowBook.title,
           'author': shallowBook.author,
           'cover_url': shallowBook.coverUrl,
-          'state': 'reading',
+          'state': shallowBook.state.toString().split('.').last,
           'user_id': supabase.auth.currentUser!.id,
         })
         .select()
@@ -56,11 +56,32 @@ class BooksService implements BooksRepository {
         .from('books')
         .select()
         .eq('user_id', supabase.auth.currentUser!.id)
-        .eq('state', 'wantToRead')
-        .maybeSingle();
+        .eq('state', 'wantToRead');
     if (response == null) return [];
     List<Book> books;
     books = (response as List).map((data) => Book.fromJson(data)).toList();
     return books;
+  }
+
+  @override
+  Future<void> deleteBook(int bookId) async {
+    await supabase.from('books').delete().eq('id', bookId);
+  }
+
+  @override
+  Future<Book> updateBookState(int bookId, BookState bookState) async {
+    String state = 'reading';
+    if (bookState == BookState.read) {
+      state = 'read';
+    } else if (bookState == BookState.wantToRead) {
+      state = 'wantToRead';
+    }
+    final response = await supabase
+        .from('books')
+        .update({'state': state})
+        .eq('id', bookId)
+        .select()
+        .maybeSingle();
+    return Book.fromJson(response);
   }
 }

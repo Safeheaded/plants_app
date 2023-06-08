@@ -1,3 +1,4 @@
+import 'package:am_project/models/book.dart';
 import 'package:am_project/router/root_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,22 @@ class BooksListsScreen extends StatefulWidget {
 }
 
 class _BooksListsScreenState extends State<BooksListsScreen> {
+  int _activeIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    var addBookState = BookState.wantToRead;
+
+    if (_activeIndex == 1) {
+      addBookState = BookState.reading;
+    } else if (_activeIndex == 2) {
+      addBookState = BookState.read;
+    }
+
     return AutoTabsScaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.router.push(const SearchBooksRoute());
+          context.router.push(SearchBooksRoute(bookState: addBookState));
         },
         child: const Icon(Icons.search),
       ),
@@ -40,7 +51,12 @@ class _BooksListsScreenState extends State<BooksListsScreen> {
             BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Read'),
           ],
           currentIndex: tabsRouter.activeIndex,
-          onTap: tabsRouter.setActiveIndex,
+          onTap: (activeIndex) {
+            tabsRouter.setActiveIndex(activeIndex);
+            setState(() {
+              _activeIndex = activeIndex;
+            });
+          },
         );
       },
     );

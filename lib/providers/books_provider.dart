@@ -18,9 +18,15 @@ class BooksProvider extends ChangeNotifier {
   List<Book> get readBooks => _readBooks;
   List<Book> get wantToReadBooks => _wantToReadBooks;
 
-  Future<void> addReadingBook(ShallowBook shallowBook) async {
-    Book book = await _booksRepository.addReadingBook(shallowBook);
-    _readingBooks.add(book);
+  Future<void> addBook(ShallowBook shallowBook) async {
+    Book book = await _booksRepository.addBook(shallowBook);
+    if (shallowBook.state == BookState.reading) {
+      _readingBooks.add(book);
+    } else if (shallowBook.state == BookState.read) {
+      _readBooks.add(book);
+    } else {
+      _wantToReadBooks.add(book);
+    }
     notifyListeners();
   }
 
@@ -40,6 +46,30 @@ class BooksProvider extends ChangeNotifier {
     _wantToReadBooks.addAll(responses[0]);
     _readingBooks.addAll(responses[1]);
     _readBooks.addAll(responses[2]);
+    notifyListeners();
+  }
+
+  Future<void> deleteBook(int bookId) async {
+    await _booksRepository.deleteBook(bookId);
+    _readingBooks.removeWhere((book) => book.id == bookId);
+    _readBooks.removeWhere((book) => book.id == bookId);
+    _wantToReadBooks.removeWhere((book) => book.id == bookId);
+    notifyListeners();
+  }
+
+  Future<void> moveToReading(int bookId) async {
+    final updatedBook =
+        await _booksRepository.updateBookState(bookId, BookState.reading);
+    _readingBooks.add(updatedBook);
+    _wantToReadBooks.removeWhere((book) => book.id == bookId);
+    notifyListeners();
+  }
+
+  Future<void> moveToRead(int bookId) async {
+    final updatedBook =
+        await _booksRepository.updateBookState(bookId, BookState.read);
+    _readBooks.add(updatedBook);
+    _readingBooks.removeWhere((book) => book.id == bookId);
     notifyListeners();
   }
 }
