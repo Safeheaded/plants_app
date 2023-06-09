@@ -15,10 +15,31 @@ abstract class _$RootRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AddReadBookRoute.name: (routeData) {
+      final args = routeData.argsAs<AddReadBookRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AddReadBookScreen(
+          key: args.key,
+          shallowBook: args.shallowBook,
+        ),
+      );
+    },
     BooksListsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const BooksListsScreen(),
+      );
+    },
+    CameraRoute.name: (routeData) {
+      final args = routeData.argsAs<CameraRouteArgs>(
+          orElse: () => const CameraRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CameraScreen(
+          key: args.key,
+          cameras: args.cameras,
+        ),
       );
     },
     DashboardRoute.name: (routeData) {
@@ -67,17 +88,45 @@ abstract class _$RootRouter extends RootStackRouter {
         child: const ToReadTabScreen(),
       );
     },
-    AddReadBookRoute.name: (routeData) {
-      final args = routeData.argsAs<AddReadBookRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: AddReadBookScreen(
-          key: args.key,
-          shallowBook: args.shallowBook,
-        ),
-      );
-    },
   };
+}
+
+/// generated route for
+/// [AddReadBookScreen]
+class AddReadBookRoute extends PageRouteInfo<AddReadBookRouteArgs> {
+  AddReadBookRoute({
+    Key? key,
+    required ShallowBook shallowBook,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AddReadBookRoute.name,
+          args: AddReadBookRouteArgs(
+            key: key,
+            shallowBook: shallowBook,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AddReadBookRoute';
+
+  static const PageInfo<AddReadBookRouteArgs> page =
+      PageInfo<AddReadBookRouteArgs>(name);
+}
+
+class AddReadBookRouteArgs {
+  const AddReadBookRouteArgs({
+    this.key,
+    required this.shallowBook,
+  });
+
+  final Key? key;
+
+  final ShallowBook shallowBook;
+
+  @override
+  String toString() {
+    return 'AddReadBookRouteArgs{key: $key, shallowBook: $shallowBook}';
+  }
 }
 
 /// generated route for
@@ -92,6 +141,43 @@ class BooksListsRoute extends PageRouteInfo<void> {
   static const String name = 'BooksListsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CameraScreen]
+class CameraRoute extends PageRouteInfo<CameraRouteArgs> {
+  CameraRoute({
+    Key? key,
+    List<CameraDescription>? cameras,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CameraRoute.name,
+          args: CameraRouteArgs(
+            key: key,
+            cameras: cameras,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CameraRoute';
+
+  static const PageInfo<CameraRouteArgs> page = PageInfo<CameraRouteArgs>(name);
+}
+
+class CameraRouteArgs {
+  const CameraRouteArgs({
+    this.key,
+    this.cameras,
+  });
+
+  final Key? key;
+
+  final List<CameraDescription>? cameras;
+
+  @override
+  String toString() {
+    return 'CameraRouteArgs{key: $key, cameras: $cameras}';
+  }
 }
 
 /// generated route for
@@ -214,42 +300,4 @@ class ToReadTabRoute extends PageRouteInfo<void> {
   static const String name = 'ToReadTabRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [AddReadBookScreen]
-class AddReadBookRoute extends PageRouteInfo<AddReadBookRouteArgs> {
-  AddReadBookRoute({
-    Key? key,
-    required ShallowBook shallowBook,
-    List<PageRouteInfo>? children,
-  }) : super(
-          AddReadBookRoute.name,
-          args: AddReadBookRouteArgs(
-            key: key,
-            shallowBook: shallowBook,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'AddReadBookRoute';
-
-  static const PageInfo<AddReadBookRouteArgs> page =
-      PageInfo<AddReadBookRouteArgs>(name);
-}
-
-class AddReadBookRouteArgs {
-  const AddReadBookRouteArgs({
-    this.key,
-    required this.shallowBook,
-  });
-
-  final Key? key;
-
-  final ShallowBook shallowBook;
-
-  @override
-  String toString() {
-    return 'AddReadBookRouteArgs{key: $key, shallowBook: $shallowBook}';
-  }
 }
