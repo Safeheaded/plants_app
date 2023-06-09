@@ -1,4 +1,6 @@
+import 'package:am_project/classes/shallow_book.dart';
 import 'package:am_project/models/book.dart';
+import 'package:am_project/screens/add_read_book.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +28,8 @@ class RootRouter extends _$RootRouter {
             AutoRoute(page: ReadTabRoute.page),
             AutoRoute(page: ToReadTabRoute.page)
           ]),
-          AutoRoute(page: SearchBooksRoute.page)
+          AutoRoute(page: SearchBooksRoute.page),
+          AutoRoute(page: AddReadBookRoute.page)
         ]),
         AutoRoute(page: SplashRoute.page, initial: true)
       ];

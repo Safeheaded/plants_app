@@ -1,4 +1,6 @@
+import 'package:am_project/classes/shallow_book.dart';
 import 'package:am_project/providers/books_provider.dart';
+import 'package:am_project/router/root_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +44,7 @@ class _ReadingTabScreenState extends State<ReadingTabScreen> {
             ),
             secondaryBackground: Container(
               alignment: Alignment.centerRight,
-              color: Colors.red,
+              color: Colors.blue,
               child: Container(
                   alignment: Alignment.centerRight,
                   margin: const EdgeInsets.only(right: 15.0),
@@ -56,7 +58,7 @@ class _ReadingTabScreenState extends State<ReadingTabScreen> {
                       Padding(
                         padding: EdgeInsets.only(right: 8.0),
                         child: Text(
-                          'Delete',
+                          'Move to Read',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
@@ -66,7 +68,19 @@ class _ReadingTabScreenState extends State<ReadingTabScreen> {
             ),
             key: ValueKey(readingBooks[index].id),
             onDismissed: (direction) {
-              context.read<BooksProvider>().deleteBook(readingBooks[index].id);
+              if (direction == DismissDirection.startToEnd) {
+                context
+                    .read<BooksProvider>()
+                    .deleteBook(readingBooks[index].id);
+              } else {
+                final selectedBook = readingBooks[index];
+                final shallow = ShallowBook(
+                    selectedBook.title,
+                    selectedBook.author,
+                    selectedBook.coverUrl,
+                    selectedBook.state);
+                context.router.push(AddReadBookRoute(shallowBook: shallow));
+              }
             },
             child: ListTile(
               leading: CircleAvatar(

@@ -67,6 +67,16 @@ abstract class _$RootRouter extends RootStackRouter {
         child: const ToReadTabScreen(),
       );
     },
+    AddReadBookRoute.name: (routeData) {
+      final args = routeData.argsAs<AddReadBookRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AddReadBookScreen(
+          key: args.key,
+          shallowBook: args.shallowBook,
+        ),
+      );
+    },
   };
 }
 
@@ -204,4 +214,42 @@ class ToReadTabRoute extends PageRouteInfo<void> {
   static const String name = 'ToReadTabRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [AddReadBookScreen]
+class AddReadBookRoute extends PageRouteInfo<AddReadBookRouteArgs> {
+  AddReadBookRoute({
+    Key? key,
+    required ShallowBook shallowBook,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AddReadBookRoute.name,
+          args: AddReadBookRouteArgs(
+            key: key,
+            shallowBook: shallowBook,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AddReadBookRoute';
+
+  static const PageInfo<AddReadBookRouteArgs> page =
+      PageInfo<AddReadBookRouteArgs>(name);
+}
+
+class AddReadBookRouteArgs {
+  const AddReadBookRouteArgs({
+    this.key,
+    required this.shallowBook,
+  });
+
+  final Key? key;
+
+  final ShallowBook shallowBook;
+
+  @override
+  String toString() {
+    return 'AddReadBookRouteArgs{key: $key, shallowBook: $shallowBook}';
+  }
 }
