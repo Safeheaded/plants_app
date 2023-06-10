@@ -20,6 +20,13 @@ class AddReadBookScreen extends StatefulWidget {
 
 class _AddReadBookScreenState extends State<AddReadBookScreen> {
   XFile? _photo;
+  final Completer<GoogleMapController> _controller = Completer();
+  LatLng? _center;
+  LatLng? _marker;
+  final Set<Marker> _markers = {};
+  void _onCameraMove(CameraPosition position) {
+    _marker = position.target;
+  }
 
   Future _goToCamera() async {
     final cameras = await availableCameras();
@@ -30,10 +37,6 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
       _photo = photo;
     });
   }
-
-  final Completer<GoogleMapController> _controller = Completer();
-
-  LatLng? _center;
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
@@ -76,11 +79,24 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
     return await Geolocator.getCurrentPosition();
   }
 
+  void _onAddMarkerButtonPressed() {
+    setState(() {
+      _markers.clear();
+      _markers.add(Marker(
+        // This marker id can be anything that uniquely identifies each marker.
+        markerId: MarkerId(_marker.toString()),
+        position: _marker!,
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+    });
+  }
+
   @override
   void initState() {
     _getCurrentPosition().then((position) => setState(() {
           _center = LatLng(position.latitude, position.longitude);
         }));
+    _marker = _center;
     super.initState();
   }
 
@@ -114,10 +130,26 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
                   ),
                 if (_center != null)
                   Expanded(
-                    child: GoogleMap(
-                      initialCameraPosition:
-                          CameraPosition(target: _center!, zoom: 11),
-                      onMapCreated: _onMapCreated,
+                    child: Stack(
+                      children: [
+                        GoogleMap(
+                          markers: _markers,
+                          onCameraMove: _onCameraMove,
+                          initialCameraPosition:
+                              CameraPosition(target: _center!, zoom: 11),
+                          onMapCreated: _onMapCreated,
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: FloatingActionButton(
+                                onPressed: _onAddMarkerButtonPressed,
+                                tooltip: 'Add',
+                                child: const Icon(Icons.add_location),
+                              ),
+                            ))
+                      ],
                     ),
                   )
                 else
