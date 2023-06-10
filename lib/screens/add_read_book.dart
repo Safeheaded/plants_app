@@ -16,7 +16,16 @@ import 'package:provider/provider.dart';
 class AddReadBookScreen extends StatefulWidget {
   final ShallowBook shallowBook;
   final int? id;
-  const AddReadBookScreen({super.key, required this.shallowBook, this.id});
+  final double? latitude;
+  final double? longitude;
+  final String? imageUrl;
+  const AddReadBookScreen(
+      {super.key,
+      required this.shallowBook,
+      this.id,
+      this.latitude,
+      this.longitude,
+      this.imageUrl});
 
   @override
   State<AddReadBookScreen> createState() => _AddReadBookScreenState();
@@ -38,7 +47,7 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
       newBook = await context.read<BooksProvider>().addBook(widget.shallowBook);
     }
     if (!mounted) return;
-    late String image;
+    String? image;
     if (_photo != null) {
       image = await context.read<BooksProvider>().uploadImage(
           widget.id == null ? newBook.id : widget.id!,
@@ -51,7 +60,7 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
         latitude: _markers.isEmpty ? null : _markers.first.position.latitude,
         longitude: _markers.isEmpty ? null : _markers.first.position.longitude,
         image: image);
-    context.router.pop();
+    context.router.back();
   }
 
   Future _goToCamera() async {
@@ -122,7 +131,20 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
     _getCurrentPosition().then((position) => setState(() {
           _center = LatLng(position.latitude, position.longitude);
         }));
-    _marker = _center;
+    if (widget.latitude != null && widget.longitude != null) {
+      _marker = LatLng(widget.latitude!, widget.longitude!);
+      setState(() {
+        _center = _marker;
+      });
+      _markers.add(Marker(
+        // This marker id can be anything that uniquely identifies each marker.
+        markerId: MarkerId(_marker.toString()),
+        position: _marker!,
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+    } else {
+      _marker = _center;
+    }
     super.initState();
   }
 
@@ -150,11 +172,15 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
                     ),
                   )
                 else
-                  const SizedBox(
+                  SizedBox(
                     width: double.infinity,
                     height: 300,
                     child: Image(
-                      image: AssetImage('assets/images/empty_image.png'),
+                      image: (widget.imageUrl != null
+                              ? NetworkImage(widget.imageUrl!)
+                              : const AssetImage(
+                                  'assets/images/empty_image.png'))
+                          as ImageProvider<Object>,
                       fit: BoxFit.cover,
                       alignment: Alignment.center,
                     ),

@@ -1,4 +1,5 @@
 import 'package:am_project/classes/shallow_book.dart';
+import 'package:am_project/main.dart';
 import 'package:am_project/models/book.dart';
 import 'package:am_project/repositories/books_repository.dart';
 import 'package:am_project/services/books_service.dart';
@@ -91,5 +92,13 @@ class BooksProvider extends ChangeNotifier {
 
     notifyListeners();
     return updatedBook;
+  }
+
+  String? getImage(String? imageUrl) {
+    if (imageUrl == null) {
+      return null;
+    }
+    final tmp = imageUrl.split('/').last;
+    return supabase.storage.from('places_images').getPublicUrl('public/$tmp');
   }
 }

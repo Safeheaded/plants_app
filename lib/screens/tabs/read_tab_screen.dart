@@ -43,22 +43,20 @@ class _ReadTabScreenState extends State<ReadTabScreen> {
                   )),
             ),
             secondaryBackground: Container(
-              alignment: Alignment.centerRight,
-              color: Colors.blue,
+              alignment: Alignment.centerLeft,
+              color: Colors.red,
               child: Container(
-                  alignment: Alignment.centerRight,
-                  margin: const EdgeInsets.only(right: 15.0),
+                  margin: const EdgeInsets.only(left: 15.0),
                   child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Icon(
                         Icons.delete,
                         color: Colors.white,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 8.0),
+                        padding: EdgeInsets.only(left: 8.0),
                         child: Text(
-                          'Move to Read',
+                          'Delete',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
@@ -79,10 +77,35 @@ class _ReadTabScreenState extends State<ReadTabScreen> {
                     selectedBook.author,
                     selectedBook.coverUrl,
                     selectedBook.state);
-                context.router.push(AddReadBookRoute(shallowBook: shallow));
+                context.router.push(AddReadBookRoute(
+                  shallowBook: shallow,
+                  id: selectedBook.id,
+                  latitude: selectedBook.latitude,
+                  longitude: selectedBook.longitude,
+                  imageUrl: context
+                      .read<BooksProvider>()
+                      .getImage(selectedBook.photoUrl),
+                ));
               }
             },
             child: ListTile(
+              onLongPress: () {
+                final selectedBook = readingBooks[index];
+                final shallow = ShallowBook(
+                    selectedBook.title,
+                    selectedBook.author,
+                    selectedBook.coverUrl,
+                    selectedBook.state);
+                context.router.push(AddReadBookRoute(
+                  shallowBook: shallow,
+                  id: selectedBook.id,
+                  latitude: selectedBook.latitude,
+                  longitude: selectedBook.longitude,
+                  imageUrl: context
+                      .read<BooksProvider>()
+                      .getImage(selectedBook.photoUrl),
+                ));
+              },
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(readingBooks[index].coverUrl),
               ),

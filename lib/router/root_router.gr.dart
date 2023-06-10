@@ -22,6 +22,10 @@ abstract class _$RootRouter extends RootStackRouter {
         child: AddReadBookScreen(
           key: args.key,
           shallowBook: args.shallowBook,
+          id: args.id,
+          latitude: args.latitude,
+          longitude: args.longitude,
+          imageUrl: args.imageUrl,
         ),
       );
     },
@@ -97,12 +101,20 @@ class AddReadBookRoute extends PageRouteInfo<AddReadBookRouteArgs> {
   AddReadBookRoute({
     Key? key,
     required ShallowBook shallowBook,
+    int? id,
+    double? latitude,
+    double? longitude,
+    String? imageUrl,
     List<PageRouteInfo>? children,
   }) : super(
           AddReadBookRoute.name,
           args: AddReadBookRouteArgs(
             key: key,
             shallowBook: shallowBook,
+            id: id,
+            latitude: latitude,
+            longitude: longitude,
+            imageUrl: imageUrl,
           ),
           initialChildren: children,
         );
@@ -117,15 +129,27 @@ class AddReadBookRouteArgs {
   const AddReadBookRouteArgs({
     this.key,
     required this.shallowBook,
+    this.id,
+    this.latitude,
+    this.longitude,
+    this.imageUrl,
   });
 
   final Key? key;
 
   final ShallowBook shallowBook;
 
+  final int? id;
+
+  final double? latitude;
+
+  final double? longitude;
+
+  final String? imageUrl;
+
   @override
   String toString() {
-    return 'AddReadBookRouteArgs{key: $key, shallowBook: $shallowBook}';
+    return 'AddReadBookRouteArgs{key: $key, shallowBook: $shallowBook, id: $id, latitude: $latitude, longitude: $longitude, imageUrl: $imageUrl}';
   }
 }
 
