@@ -66,7 +66,7 @@ class _ReadingTabScreenState extends State<ReadingTabScreen> {
                     ],
                   )),
             ),
-            key: ValueKey(readingBooks[index].id),
+            key: UniqueKey(),
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
                 context

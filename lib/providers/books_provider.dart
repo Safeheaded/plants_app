@@ -2,6 +2,7 @@ import 'package:am_project/classes/shallow_book.dart';
 import 'package:am_project/models/book.dart';
 import 'package:am_project/repositories/books_repository.dart';
 import 'package:am_project/services/books_service.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,7 +19,7 @@ class BooksProvider extends ChangeNotifier {
   List<Book> get readBooks => _readBooks;
   List<Book> get wantToReadBooks => _wantToReadBooks;
 
-  Future<void> addBook(ShallowBook shallowBook) async {
+  Future<Book> addBook(ShallowBook shallowBook) async {
     Book book = await _booksRepository.addBook(shallowBook);
     if (shallowBook.state == BookState.reading) {
       _readingBooks.add(book);
@@ -28,6 +29,7 @@ class BooksProvider extends ChangeNotifier {
       _wantToReadBooks.add(book);
     }
     notifyListeners();
+    return book;
   }
 
   Future<void> getReadingBooks() async {
@@ -71,5 +73,23 @@ class BooksProvider extends ChangeNotifier {
     _readBooks.add(updatedBook);
     _readingBooks.removeWhere((book) => book.id == bookId);
     notifyListeners();
+  }
+
+  Future<String> uploadImage(int bookId, String bookTitle, XFile image) async {
+    return await _booksRepository.uploadImage(bookId, bookTitle, image);
+  }
+
+  Future<Book> updateReadBook(int bookId,
+      {String? image, double? latitude, double? longitude}) async {
+    final updatedBook = await _booksRepository.updateBookState(
+        bookId, BookState.read,
+        image: image, latitude: latitude, longitude: longitude);
+
+    _readingBooks.removeWhere((book) => book.id == bookId);
+    _wantToReadBooks.removeWhere((book) => book.id == bookId);
+    _readBooks.add(updatedBook);
+
+    notifyListeners();
+    return updatedBook;
   }
 }

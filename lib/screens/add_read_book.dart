@@ -2,17 +2,21 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:am_project/classes/shallow_book.dart';
+import 'package:am_project/models/book.dart';
+import 'package:am_project/providers/books_provider.dart';
 import 'package:am_project/router/root_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class AddReadBookScreen extends StatefulWidget {
   final ShallowBook shallowBook;
-  const AddReadBookScreen({super.key, required this.shallowBook});
+  final int? id;
+  const AddReadBookScreen({super.key, required this.shallowBook, this.id});
 
   @override
   State<AddReadBookScreen> createState() => _AddReadBookScreenState();
@@ -26,6 +30,28 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
   final Set<Marker> _markers = {};
   void _onCameraMove(CameraPosition position) {
     _marker = position.target;
+  }
+
+  Future _saveData() async {
+    late Book newBook;
+    if (widget.id == null) {
+      newBook = await context.read<BooksProvider>().addBook(widget.shallowBook);
+    }
+    if (!mounted) return;
+    late String image;
+    if (_photo != null) {
+      image = await context.read<BooksProvider>().uploadImage(
+          widget.id == null ? newBook.id : widget.id!,
+          widget.shallowBook.title,
+          _photo!);
+    }
+    if (!mounted) return;
+    context.read<BooksProvider>().updateReadBook(
+        widget.id == null ? newBook.id : widget.id!,
+        latitude: _markers.isEmpty ? null : _markers.first.position.latitude,
+        longitude: _markers.isEmpty ? null : _markers.first.position.longitude,
+        image: image);
+    context.router.pop();
   }
 
   Future _goToCamera() async {
@@ -103,7 +129,12 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Add Read Book')),
+        appBar: AppBar(
+          title: const Text('Add Read Book'),
+          actions: [
+            IconButton(onPressed: _saveData, icon: const Icon(Icons.check))
+          ],
+        ),
         body: InkWell(
             onTap: _goToCamera,
             child: Column(
