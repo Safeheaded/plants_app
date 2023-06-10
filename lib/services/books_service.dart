@@ -41,13 +41,12 @@ class BooksService implements BooksRepository {
   }
 
   @override
-  Future<List<Book>> getReadBook() async {
+  Future<List<Book>> getReadBooks() async {
     final response = await supabase
         .from('books')
         .select()
         .eq('user_id', supabase.auth.currentUser!.id)
-        .eq('state', 'read')
-        .maybeSingle();
+        .eq('state', 'read');
     if (response == null) return [];
     List<Book> books;
     books = (response as List).map((data) => Book.fromJson(data)).toList();

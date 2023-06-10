@@ -43,7 +43,7 @@ class BooksProvider extends ChangeNotifier {
     final responses = await Future.wait([
       _booksRepository.getWantToReadBooks(),
       _booksRepository.getReadingBooks(),
-      _booksRepository.getReadBook()
+      _booksRepository.getReadBooks()
     ]);
     _wantToReadBooks.addAll(responses[0]);
     _readingBooks.addAll(responses[1]);

@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 
 abstract class BooksRepository {
   Future<List<Book>> getReadingBooks();
-  Future<List<Book>> getReadBook();
+  Future<List<Book>> getReadBooks();
   Future<List<Book>> getWantToReadBooks();
   Future<Book> addBook(ShallowBook shallowBook);
   Future<void> deleteBook(int bookId);
