@@ -34,10 +34,12 @@ class _BooksListsScreenState extends State<BooksListsScreen> {
       appBarBuilder: (context, tabsRouter) {
         return AppBar(
           title: const Text('Books Lists'),
-          actions: const [
+          actions: [
             IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: null,
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                context.router.push(const UserRoute());
+              },
             ),
           ],
         );

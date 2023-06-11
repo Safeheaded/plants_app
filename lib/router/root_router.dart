@@ -2,6 +2,7 @@ import 'package:am_project/classes/shallow_book.dart';
 import 'package:am_project/models/book.dart';
 import 'package:am_project/screens/add_read_book.dart';
 import 'package:am_project/screens/camera_screen.dart';
+import 'package:am_project/screens/user_screen.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,8 @@ class RootRouter extends _$RootRouter {
           ]),
           AutoRoute(page: SearchBooksRoute.page),
           AutoRoute(page: AddReadBookRoute.page),
-          AutoRoute(page: CameraRoute.page)
+          AutoRoute(page: CameraRoute.page),
+          AutoRoute(page: UserRoute.page)
         ]),
         AutoRoute(page: SplashRoute.page, initial: true)
       ];
