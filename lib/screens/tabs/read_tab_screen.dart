@@ -66,27 +66,7 @@ class _ReadTabScreenState extends State<ReadTabScreen> {
             ),
             key: UniqueKey(),
             onDismissed: (direction) {
-              if (direction == DismissDirection.startToEnd) {
-                context
-                    .read<BooksProvider>()
-                    .deleteBook(readingBooks[index].id);
-              } else {
-                final selectedBook = readingBooks[index];
-                final shallow = ShallowBook(
-                    selectedBook.title,
-                    selectedBook.author,
-                    selectedBook.coverUrl,
-                    selectedBook.state);
-                context.router.push(AddReadBookRoute(
-                  shallowBook: shallow,
-                  id: selectedBook.id,
-                  latitude: selectedBook.latitude,
-                  longitude: selectedBook.longitude,
-                  imageUrl: context
-                      .read<BooksProvider>()
-                      .getImage(selectedBook.photoUrl),
-                ));
-              }
+              context.read<BooksProvider>().deleteBook(readingBooks[index].id);
             },
             child: ListTile(
               onLongPress: () {

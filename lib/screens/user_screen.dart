@@ -31,19 +31,19 @@ class _UserScreenState extends State<UserScreen> {
                   context.router.replaceAll([const LoginRoute()]);
                 },
                 child: const Text('Sign out')),
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              child: ElevatedButton(
-                  style: const ButtonStyle().copyWith(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)),
-                  onPressed: () async {
-                    await supabase.auth.admin
-                        .deleteUser(supabase.auth.currentUser!.id);
-                    if (!mounted) return;
-                    context.router.replaceAll([const LoginRoute()]);
-                  },
-                  child: const Text('Delete account')),
-            )
+            // Container(
+            //   margin: const EdgeInsets.only(top: 20),
+            //   child: ElevatedButton(
+            //       style: const ButtonStyle().copyWith(
+            //           backgroundColor: MaterialStateProperty.all(Colors.red)),
+            //       onPressed: () async {
+            //         await supabase.auth.admin
+            //             .deleteUser(supabase.auth.currentUser!.id);
+            //         if (!mounted) return;
+            //         context.router.replaceAll([const LoginRoute()]);
+            //       },
+            //       child: const Text('Delete account')),
+            // )
           ],
         ),
       ),

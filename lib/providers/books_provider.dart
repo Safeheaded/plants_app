@@ -88,6 +88,7 @@ class BooksProvider extends ChangeNotifier {
 
     _readingBooks.removeWhere((book) => book.id == bookId);
     _wantToReadBooks.removeWhere((book) => book.id == bookId);
+    _readBooks.removeWhere((book) => book.id == bookId);
     _readBooks.add(updatedBook);
 
     notifyListeners();
