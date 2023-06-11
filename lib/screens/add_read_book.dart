@@ -68,6 +68,7 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
     if (!mounted) return;
     final XFile photo =
         await context.router.push(CameraRoute(cameras: cameras)) as XFile;
+    if (!mounted) return;
     setState(() {
       _photo = photo;
     });
@@ -128,9 +129,13 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
 
   @override
   void initState() {
-    _getCurrentPosition().then((position) => setState(() {
+    _getCurrentPosition().then((position) {
+      if (mounted) {
+        setState(() {
           _center = LatLng(position.latitude, position.longitude);
-        }));
+        });
+      }
+    });
     if (widget.latitude != null && widget.longitude != null) {
       _marker = LatLng(widget.latitude!, widget.longitude!);
       setState(() {
