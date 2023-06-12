@@ -79,7 +79,8 @@ class _ReadingTabScreenState extends State<ReadingTabScreen> {
                     selectedBook.author,
                     selectedBook.coverUrl,
                     selectedBook.state);
-                context.router.push(AddReadBookRoute(shallowBook: shallow));
+                context.router.push(AddReadBookRoute(
+                    shallowBook: shallow, id: selectedBook.id));
               }
             },
             child: ListTile(
