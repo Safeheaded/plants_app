@@ -1,7 +1,9 @@
 import 'package:am_project/main.dart';
+import 'package:am_project/providers/books_provider.dart';
 import 'package:am_project/router/root_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class UserScreen extends StatefulWidget {
@@ -28,6 +30,7 @@ class _UserScreenState extends State<UserScreen> {
                 onPressed: () async {
                   await supabase.auth.signOut();
                   if (!mounted) return;
+                  context.read<BooksProvider>().clearAll();
                   context.router.replaceAll([const LoginRoute()]);
                 },
                 child: const Text('Sign out')),

@@ -102,4 +102,11 @@ class BooksProvider extends ChangeNotifier {
     final tmp = imageUrl.split('/').last;
     return supabase.storage.from('places_images').getPublicUrl('public/$tmp');
   }
+
+  void clearAll() {
+    _readingBooks.clear();
+    _readBooks.clear();
+    _wantToReadBooks.clear();
+    notifyListeners();
+  }
 }
