@@ -69,9 +69,11 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
     final XFile? photo =
         await context.router.push(CameraRoute(cameras: cameras)) as XFile?;
     if (!mounted) return;
-    setState(() {
-      _photo = photo;
-    });
+    if (photo != null) {
+      setState(() {
+        _photo = photo;
+      });
+    }
   }
 
   void _onMapCreated(GoogleMapController controller) {
