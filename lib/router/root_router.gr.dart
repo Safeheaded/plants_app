@@ -38,7 +38,7 @@ abstract class _$RootRouter extends RootStackRouter {
     CameraRoute.name: (routeData) {
       final args = routeData.argsAs<CameraRouteArgs>(
           orElse: () => const CameraRouteArgs());
-      return AutoRoutePage<XFile>(
+      return AutoRoutePage<XFile?>(
         routeData: routeData,
         child: CameraScreen(
           key: args.key,

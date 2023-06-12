@@ -66,8 +66,8 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
   Future _goToCamera() async {
     final cameras = await availableCameras();
     if (!mounted) return;
-    final XFile photo =
-        await context.router.push(CameraRoute(cameras: cameras)) as XFile;
+    final XFile? photo =
+        await context.router.push(CameraRoute(cameras: cameras)) as XFile?;
     if (!mounted) return;
     setState(() {
       _photo = photo;

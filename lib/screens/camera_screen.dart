@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-@RoutePage<XFile>()
+@RoutePage<XFile?>()
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription>? cameras;
   const CameraScreen({super.key, this.cameras});
