@@ -60,7 +60,7 @@ class _AddReadBookScreenState extends State<AddReadBookScreen> {
         latitude: _markers.isEmpty ? null : _markers.first.position.latitude,
         longitude: _markers.isEmpty ? null : _markers.first.position.longitude,
         image: image);
-    context.router.back();
+    context.router.pop();
   }
 
   Future _goToCamera() async {
